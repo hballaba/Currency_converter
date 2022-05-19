@@ -1,0 +1,58 @@
+{% extends 'convert\base.html' %}
+
+{% block title %}
+Обменник
+{% endblock %}
+
+{% block content %}
+
+
+    {% if currency_converted %}
+        <h4>
+           Конвертация {{form.amount.value}} {{form.currency_from.value}}
+            составляет {{currency_converted}} {{form.currency_to.value}}
+        </h4>
+
+    {% else %}
+        <h4> Выберите валюты для обмена</h4>
+        <form action="{% url 'converter' %}" method="post">
+         {% csrf_token %}
+        <p><label for="id_amount">Amount:</label>
+            <input type="number" step="1" min="1" max="1000000" value="10"name="amount" required id="id_amount"/>
+        </p>
+
+         <p><label for="id_currency_from">currency_from:</label>
+            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg" name="currency_from" required id="id_currency_from">
+                {% for char_code in char_codes %}
+                    <option selected>{{ char_code }} </option>
+                {% endfor %}
+            </select>
+        </p>
+        <p><label for="id_currency_to">currency_to:</label>
+             <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg "name="currency_to" required id="id_currency_to">
+                {% for char_code in char_codes %}
+                      <option value={{ char_code }} selected>{{ char_code }} </option>
+                {% endfor %}
+             </select>
+         </p>
+        <p>
+            <button  type="submit" id="submit">Отправить</button>
+        </p>
+    </form>
+ {% endif %}
+
+
+    <!--<script>
+        let select1 = document.getElementById("cur1");
+        let select2 = document.getElementById("cur2");
+
+        document.querySelector('#submit').onclick = function() {
+            let idx = select1.selectedIndex;
+            let cur1 = select1.options[idx].value;
+            idx = select2.selectedIndex;
+            let cur2 = select2.options[idx].value;
+
+         }
+    </script>
+-->
+{% endblock %}

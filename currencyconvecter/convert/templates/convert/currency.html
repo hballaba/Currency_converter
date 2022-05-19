@@ -1,0 +1,15 @@
+{% extends 'convert\base.html' %}
+
+{% block title %}
+    Официальные курсы валют
+{% endblock %}
+
+{% block content %}
+    <h1>Официальный курс рубля на {{ date }}</h1>
+    {% for key, value in response.items %}
+        <div class="alert alert-warning mt-2">
+            <h3>{{ key }} -> {{ value }}</h3>
+        </div>
+    {% endfor %}
+
+{% endblock %}
